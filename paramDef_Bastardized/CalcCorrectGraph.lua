@@ -1,0 +1,22 @@
+﻿CalcCorrectGraphParamPreprocessedTable = {
+  ["Field 1"] = "f32 stageMaxVal0",
+["Field 2"] = "f32 stageMaxVal1",
+["Field 3"] = "f32 stageMaxVal2",
+["Field 4"] = "f32 stageMaxVal3",
+["Field 5"] = "f32 stageMaxVal4",
+["Field 6"] = "f32 stageMaxGrowVal0",
+["Field 7"] = "f32 stageMaxGrowVal1",
+["Field 8"] = "f32 stageMaxGrowVal2",
+["Field 9"] = "f32 stageMaxGrowVal3",
+["Field 10"] = "f32 stageMaxGrowVal4",
+["Field 11"] = "f32 adjPt_maxGrowVal0",
+["Field 12"] = "f32 adjPt_maxGrowVal1",
+["Field 13"] = "f32 adjPt_maxGrowVal2",
+["Field 14"] = "f32 adjPt_maxGrowVal3",
+["Field 15"] = "f32 adjPt_maxGrowVal4",
+["Field 16"] = "f32 init_inclination_soul",
+["Field 17"] = "f32 adjustment_value",
+["Field 18"] = "f32 boundry_inclination_soul",
+["Field 19"] = "f32 boundry_value",
+["Field 20"] = "h32 pad[4]"
+}
