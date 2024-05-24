@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>ParamDef to Lua Table Converter</h1>
+
+<p>Insert a ParamDef into me</p>
+<input type="file" id="xmlFileInput">
+<button onclick="handleXMLFile()">Parse XML</button>
+
+<p id="xmlString"></p>
+
+
+<script>
+function handleXMLFile() {
+    let fileInput = document.getElementById('xmlFileInput');
+    let file = fileInput.files[0];
+
+    if (file) {
+        let reader = new FileReader();
+        reader.readAsText(file, "UTF-8");
+        console.log("reading...");
+        
+        reader.onload = function(e) {
+            let xmlString = e.target.result;
+        console.log("reading...");
+
+            // Parse the XML string into a DOM object
+            let parser = new DOMParser();
+            let xmlDoc = parser.parseFromString(xmlString, "text/xml");
+
+            // Select all Field elements
+            let fieldElements = xmlDoc.getElementsByTagName("Field");
+            console.log(fieldElements);
+
+            // Function to convert attributes of an element to Lua dictionary-like format
+            function attributesToLuaDictionary(element) {
+                let attributes = element.attributes;
+                let luaString = "";
+                for (let i = 0; i < attributes.length; i++) {
+                    luaString += "\"" + attributes[i].value + "\"";
+                    if (i < attributes.length - 1) {
+                        luaString += ", ";
+                    }
+                };
+                return luaString;
+            }
+
+            // Iterate over each Field element
+            for (let i = 0; i < fieldElements.length; i++) {
+                let field = fieldElements[i];
+
+                // Remove all children of the Field element
+                while (field.firstChild) {
+                    field.removeChild(field.firstChild);
+                }
+
+                // Print the attributes of the Field element in Lua dictionary-like format
+                let luaAttributes = attributesToLuaDictionary(field);
+                document.getElementById("xmlString").innerText += ("[\"Field " + (i + 1) + "\"] = " + luaAttributes) + ",\n";
+            }
+
+        }
+    }
+}
+
+
+</script>
+
+</body>
+</html>
