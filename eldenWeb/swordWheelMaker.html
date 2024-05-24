@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOW Manager</title>
+</head>
+<body>
+  <button onclick="fetchAndPopulate('defaultSwordArts.csv')">Get AOW Data</button>
+  <table id="csvTable">
+    <thead id="csvHeader">
+      <!-- Table header will be populated dynamically -->
+    </thead>
+    <tbody id="csvData">
+      <!-- Table body will be populated dynamically -->
+    </tbody>
+  </table>
+
+  <form id="modForm" style="display:none;">
+    <label for="modName">Choose an AOW:</label>
+    <select id="modName" name="modName">
+      <!-- Options will be populated dynamically -->
+    </select>
+    <label for="activate">Helldivers Stratagem Code:</label>
+    <input type="text" id="activate" name="UDLR">
+    <button type="button" onclick="submitMod()">Submit</button>
+  </form>
+
+  <script>
+    function sendServerMessage(message) {
+      let url = `/mictest/` + message;
+      fetch(url, { method: 'GET' })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+        console.log('Response from server:', data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+
+    function fetchAndPopulate(fileName) {
+      fetch(`/viewFile/${fileName}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(data => {
+        const rows = data.trim().split('\n');
+        if (rows.length < 2) {
+          throw new Error('CSV data is empty or invalid');
+        }
+
+        const headerRow = rows[0];
+        const headers = headerRow.replace(/\r/g, "").split(',');
+        
+        if (!headers.includes('ID') || !headers.includes('Name')) {
+          throw new Error('CSV does not contain required headers');
+        }
+
+        const tableHeader = document.getElementById('csvHeader');
+        tableHeader.innerHTML = '';
+        const headerRowElement = document.createElement('tr');
+        headers.forEach(header => {
+          const th = document.createElement('th');
+          th.textContent = header;
+          headerRowElement.appendChild(th);
+        });
+        tableHeader.appendChild(headerRowElement);
+
+        rows.shift();
+        const tableBody = document.getElementById('csvData');
+        tableBody.innerHTML = '';
+        const modNameSelect = document.getElementById('modName');
+        modNameSelect.innerHTML = '';
+
+        rows.forEach(row => {
+          const columns = row.split(',');  // Ensure proper delimiter is used
+          const tr = document.createElement('tr');
+          
+          let idValue = '';
+          let nameValue = '';
+          
+          columns.forEach((column, index) => {
+            const td = document.createElement('td');
+            td.textContent = column;
+            tr.appendChild(td);
+
+            if (headers[index] === 'ID') {
+              idValue = column;
+            } else if (headers[index] === 'Name') {
+              nameValue = column;
+            }
+          });
+
+          if (idValue && nameValue) {
+            const option = document.createElement('option');
+            option.value = idValue;
+            option.textContent = nameValue;
+            modNameSelect.appendChild(option);
+          }
+
+          tableBody.appendChild(tr);
+        });
+
+        document.getElementById('modForm').style.display = 'block';
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+
+    function submitMod() {
+      const modName = document.getElementById('modName').value;
+      const activate = document.getElementById('activate').value;
+      const message = `type=wheelModEntry&aow=${encodeURIComponent(modName)}&stratagem=${encodeURIComponent(activate)}`;
+      sendServerMessage(message);
+      //console.log(message);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pebble Manager</title>
+</head>
+<body>
+  <button onclick="fetchAndPopulate('glintstonePebbles.csv')">Get Pebble Data</button>
+  <table id="csvTable">
+    <thead id="csvHeader">
+      <!-- Table header will be populated dynamically -->
+    </thead>
+    <tbody id="csvData">
+      <!-- Table body will be populated dynamically -->
+    </tbody>
+  </table>
+
+  <form id="modForm" style="display:none;">
+    <label for="modName">Choose a mod:</label>
+    <select id="modName" name="modName">
+      <!-- Options will be populated dynamically -->
+    </select>
+    <label for="activate">Set Active:</label>
+    <input type="checkbox" id="activate" name="activate">
+    <button type="button" onclick="submitMod()">Submit</button>
+  </form>
+
+  <script>
+    function sendServerMessage(message) {
+      // Construct the URL
+      let url = `/mictest/` + message;
+
+      // Send a fetch request
+      fetch(url, {
+        method: 'GET',
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(data => {
+        console.log('Response from server:', data);
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+
+    function fetchAndPopulate(fileName) {
+      fetch(`/viewFile/${fileName}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(data => {
+        // Split the CSV by lines
+        const rows = data.trim().split('\n');
+
+        // Extract header (first line)
+        const headerRow = rows[0];
+        const headers = headerRow.split('::');
+
+        // Populate table header
+        const tableHeader = document.getElementById('csvHeader');
+        tableHeader.innerHTML = '';
+        const headerRowElement = document.createElement('tr');
+        headers.forEach(header => {
+          const th = document.createElement('th');
+          th.textContent = header;
+          headerRowElement.appendChild(th);
+        });
+        tableHeader.appendChild(headerRowElement);
+
+        // Remove the header from rows array
+        rows.shift();
+
+        // Populate table body
+        const tableBody = document.getElementById('csvData');
+        tableBody.innerHTML = '';
+        const modNameSelect = document.getElementById('modName');
+        modNameSelect.innerHTML = ''; // Clear previous options
+
+        rows.forEach(row => {
+          const columns = row.split('::');
+          const tr = document.createElement('tr');
+          columns.forEach((column, index) => {
+            const td = document.createElement('td');
+            td.textContent = column;
+            tr.appendChild(td);
+            
+            // If this is the Name column, add it to the dropdown
+            if (headers[index] === 'Name') {
+              const option = document.createElement('option');
+              option.value = column;
+              option.textContent = column;
+              modNameSelect.appendChild(option);
+            }
+          });
+          tableBody.appendChild(tr);
+        });
+
+        // Show the form after populating the table
+        document.getElementById('modForm').style.display = 'block';
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+      });
+    }
+
+    function submitMod() {
+      const modName = document.getElementById('modName').value;
+      const activate = document.getElementById('activate').checked;
+      const message = `type=pebbleMod&modName=${encodeURIComponent(modName)}&activate=${activate}`;
+      sendServerMessage(message);
+    }
+  </script>
+</body>
+</html>

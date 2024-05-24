@@ -1,0 +1,29 @@
+Name::Description::Category::Importance::Active
+Protective Shot: Terra Magicka::Upon the windup to cast Glintstone Pebble, you first cast Terra Magicka for free. The Pebble afterwards costs 15 more stamina and 5 more FP.::Protection::5::true
+Protective Shot: Carian Retaliation::Upon the windup to cast Glintstone Pebble, you first cast Carian Retaliation for free. The Pebble afterwards costs 15 more stamina and 5 more FP.::Protection::4::false
+Protective Shot: Storm Stomp::Upon the windup to cast Glintstone Pebble, you first cast Storm Stomp for free. The Pebble afterwards costs 5 more stamina.::Protection::3::false
+Protective Shot: Storm Wall::Upon the windup to cast Glintstone Pebble, you first cast Storm Wall for free. The Pebble afterwards costs 10 more stamina.::Protection::2::false
+Protective Shot: Thops' Barrier::Upon the windup to cast Glintstone Pebble, you first cast Thops' Barrier for free. The Pebble afterwards costs 10 more stamina and 3 more FP.::Protection::1::false
+Elemental Blast: Founding Rain of Stars::A Glintstone Pebble mod that increases FP and stamina cost by 15 each but also creates a Founding Rain of Stars upon hit.::ElementBlast::1::false
+Elemental Blast: Freezing Bomb::A Glintstone Pebble mod that increases FP and stamina cost by 10 each but also creates a Freezing Bomb upon hit.::ElementBlast::2::false
+Elemental Blast: Shattering Crystal::A Glintstone Pebble mod that increases FP and stamina cost by 7 each but also creates a Shattering Crystal upon hit.::ElementBlast::3::false
+Siege Magic::A Glintstone Pebble mod that increases damage based on the distance the Pebble flew.::Combinable::1::true
+Bombing Flight::A Glintstone Pebble mod that increases homing and shoots the Pebble upwards.::Combinable::1::false
+Left-Curving Flight::A Glintstone Pebble mod that increases homing, decreases velocity, and starts the Pebble curving leftwards, for shooting around cover.::Curve::2::false
+Right-Curving Flight::A Glintstone Pebble mod that increases homing, decreases velocity, and starts the Pebble curving rightwards, for shooting around cover.::Curve::1::false
+Longer Flight::A Glintstone Pebble mod that increases flight time of the Glintstone Pebble to 4 seconds, adding 3 FP to the cost.::Combinable::1::false
+Black Hole::A Glintstone Pebble mod that allows it to absorb magic and have a larger radius, adding 7 FP to the cost.::RepelAttract::1::false
+White Hole::A Glintstone Pebble mod that allows it to repel magic and have a larger radius, adding 7 FP to the cost.::RepelAttract::2::false
+Triple Splitshot::A mod that allows firing of the Glintstone Pebble to be done thricely for an additional 10 FP.::Combinable::1::true
+Reaving Leech Shot::A mod that gives HP to the caster in exchange for FP when hitting enemies at a 1:2 ratio. Takes the self-buff slot.::Shooter-Effect::1::false
+Reaving Cannon Shot::A mod that gives FP to the caster in exchange for HP when hitting enemies at a 3:1 ratio. Takes the self-buff slot.::Shooter-Effect::2::false
+Reaving Second Wind Shot::A mod that gives max stamina to the caster in exchange for max HP when hitting enemies at a 1:2 ratio. Takes the self-buff slot.::Shooter-Effect::3::false
+Freezing Shot::A mod that allows the Pebble to build Frostbite, costing 5 extra stamina. Takes the first Magic Effect slot. The Frostbite applied by this effect lasts 40 seconds and makes enemies take 1.5x magic damage.::Effect-0::1::false
+Freezing-Smashing Shot::A mod that allows the Pebble to build Frostbite, costing 5 extra stamina and 2 extra FP. Takes the first Magic Effect slot. The Frostbite applied by this effect lasts 10 seconds and makes enemies take 1.8x poise damage.::Effect-0::2::false
+Poisoning Shot::A mod that allows the Pebble to build Poison, costing 5 extra stamina. Takes the first Magic Effect slot.::Effect-0::1::false
+Focused Shot::A mod that allows the Pebble to be charged. Charged casts are much faster and cost 15 less FP and inherit all Combinable traits. In exchange, uncharged shots consume 5 more FP.::Animation::1::false
+Drilling Shot::A mod that allows the Pebble to be charged. Charged casts inherit all Combinable traits and increases hitbox size of the charged Pebble and allows it to pierce through walls, creatures, and objects.::Animation::2::false
+Channeled Shot::A mod that allows the Pebble to be cast in a channeling manner.::Animation::3::false
+Nimble Shot::A mod that allows the Pebble to be cast like Carian Slicer.::Animation::4::false
+Blasting Miner Shot::A mod that allows for mobile channeling of the Pebble. Once finished, the slam casts Zamor Ice Storm. Costs a lot of stamina to fire.::Animation::5::false
+Rykard's Rancor Guide::A mod that summons Rykard's to cast Pebble for you while it is active. Costs 75 more FP.::Animation::20::false
